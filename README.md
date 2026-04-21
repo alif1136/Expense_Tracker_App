@@ -44,7 +44,8 @@ A simple and functional Expense Tracker application built using **Flutter**, fol
 ## 🧠 Architecture Overview (MVVM)
 
 ### ScreenShot
-<img width="259" height="194" alt="image" src="https://github.com/user-attachments/assets/cb78c0fe-49a5-44ef-bba4-16d024bfa002" />
+<img width="1366" height="860" alt="S2" src="https://github.com/user-attachments/assets/e5811264-8516-405b-bc4b-b54301d2d716" />
+
 
 
 ### 📦 Models
