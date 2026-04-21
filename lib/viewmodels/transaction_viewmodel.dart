@@ -1,12 +1,17 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../models/transaction_model.dart';
 
 class TransactionViewModel extends ChangeNotifier {
-  static const String _storageKey = 'transactions';
+  static const String _storageKey = 'ledger.transactions';
   final List<TransactionModel> _transactions = [];
+  bool _isLoaded = false;
 
+  bool get isLoaded => _isLoaded;
+
+  /// Newest first.
   List<TransactionModel> get transactions =>
       List.unmodifiable(_transactions.reversed);
 
@@ -27,14 +32,15 @@ class TransactionViewModel extends ChangeNotifier {
   Future<void> loadTransactions() async {
     final prefs = await SharedPreferences.getInstance();
     final stored = prefs.getString(_storageKey);
-    if (stored != null) {
+    if (stored != null && stored.isNotEmpty) {
       final List<dynamic> decoded = jsonDecode(stored);
       _transactions
         ..clear()
         ..addAll(decoded
             .map((e) => TransactionModel.fromJson(e as Map<String, dynamic>)));
-      notifyListeners();
     }
+    _isLoaded = true;
+    notifyListeners();
   }
 
   Future<void> _saveTransactions() async {
